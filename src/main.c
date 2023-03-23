@@ -1,7 +1,11 @@
-#include "stm32f103xb.h"    // Inicjalizacja zmiennej wskaźnika opóźnienia
+#include "stm32f103xb.h" // Inicjalizacja zmiennej wskaźnika opóźnienia
+#include <string.h>
 volatile uint32_t delayVar; // Flagę, która będzie ustawiona na True, jeśli przycisk jest wciśnięty
 volatile uint8_t isButtonPressed;
 volatile int time;
+#define BUFFER_SIZE 64
+char buffer[BUFFER_SIZE];
+int buffer_index = 0;
 
 void SysTick_Handler() // SysTick
 {
@@ -63,10 +67,10 @@ void button_init(void)
     GPIOB->ODR |= GPIO_ODR_ODR12;
 }
 
-void couter_enable() // nie wlacza sie
+void couter_enable()
 {
     // PA0 in reset state, floating , input
-    RCC->APB2ENR |= RCC_APB2ENR_IOPCEN | RCC_APB2ENR_IOPAEN ; // enable clock to C, Tim2
+    RCC->APB2ENR |= RCC_APB2ENR_IOPCEN | RCC_APB2ENR_IOPAEN; // enable clock to C, Tim2
     RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
     TIM2->CCMR1 |= TIM_CCMR1_CC1S_0 | TIM_CCMR1_CC2S_1; // IC1 is mapped on TI1, IC2 is mapped on TI1
     TIM2->CCER &= ~TIM_CCER_CC1P;
@@ -80,8 +84,22 @@ void couter_enable() // nie wlacza sie
 
     TIM2->CR1 |= TIM_CR1_CEN; // counter enable
 
-// w tym przykładzie na PA1 wpuszczamy sygnał i debuggerem sprawdzamy do ilu doliczył
-// licznik od zbocza narastającego do narastającego (CCR1) i od zbocza narastającego do opadającego (CCR2)
+    // w tym przykładzie na PA1 wpuszczamy sygnał i debuggerem sprawdzamy do ilu doliczył
+    // licznik od zbocza narastającego do narastającego (CCR1) i od zbocza narastającego do opadającego (CCR2)
+}
+
+// Funkcja odczytuje dane z interfejsu UART
+void read_uart_data(void)
+{
+    // Sprawdź, czy wystąpiło przerwanie w interfejsie USART1 związane z odebraniem danych
+    if (USART1->SR & USART_SR_RXNE)
+    {
+        // Odczytaj odebrane dane z rejestru DR
+        char received_data = USART1->DR;
+
+        // Tutaj można dodać kod, który będzie przetwarzał odebrane dane
+        // np. zapisując je do bufora lub wywołując inną funkcję w celu ich przetworzenia
+    }
 }
 
 // Funkcja główna
@@ -101,7 +119,7 @@ int main(void)
     // Włącz NVIC dla przerwań timera1
     NVIC_EnableIRQ(TIM1_UP_IRQn);
 
-couter_enable();
+    couter_enable();
     // Pętla główna
     while (1)
     {
