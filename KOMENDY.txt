@@ -1,0 +1,5 @@
+
+openocd -f "C:\Program Files (x86)\openocd-0.10.0\scripts\interface\stlink-v2.cfg" -f "C:\Program Files (x86)\openocd-0.10.0\scripts\target\stm32f1x.cfg" -c "program program.elf verify reset exit"
+
+
+openocd -f "C:\Program Files (x86)\openocd-0.11.0-1\scripts\interface\stlink-v2.cfg" -f "C:\Program Files (x86)\openocd-0.11.0-1\scripts\target\stm32f1x.cfg"
