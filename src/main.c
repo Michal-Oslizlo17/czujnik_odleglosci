@@ -21,7 +21,7 @@ void delay_ms(int t) // Opóźnienie (ms)
         ;
 }
 
-// Funkcja obsługi przerwań dla timer1
+// Funkcja obsługi przerwań dla timer1 - impuls wyzwalajacy odleglosciomierz
 void TIM1_UP_IRQHandler(void)
 {
     // Sprawdź, jaka sytuacja wywołała przerwanie
@@ -39,7 +39,7 @@ void TIM1_UP_IRQHandler(void)
 }
 
 // Funkcja inicjalizacji timera
-void timer_init(void)
+void timer1_init(void)
 {
     // Włącz zegar dla portu GPIOC i TIM1
     RCC->APB2ENR |= RCC_APB2ENR_IOPCEN | RCC_APB2ENR_TIM1EN;
@@ -67,11 +67,19 @@ void button_init(void)
     GPIOB->ODR |= GPIO_ODR_ODR12;
 }
 
+void TIM2_IRQHandler()
+{
+    if(TIM2->SR && TIM_SR_CC1IF)
+    {
+        TIM2->SR &= ~TIM_SR_CC1IF; // skasowanie tej flagi
+    }
+}
+
 void couter_enable()
 {
     // PA0 in reset state, floating , input
     RCC->APB2ENR |= RCC_APB2ENR_IOPCEN | RCC_APB2ENR_IOPAEN; // enable clock to C, Tim2
-    RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
+    RCC->APB1ENR |= RCC_APB1ENR_TIM2EN; // apb1 dziala na 
     TIM2->CCMR1 |= TIM_CCMR1_CC1S_0 | TIM_CCMR1_CC2S_1; // IC1 is mapped on TI1, IC2 is mapped on TI1
     TIM2->CCER &= ~TIM_CCER_CC1P;
     TIM2->CCER |= TIM_CCER_CC2P;                 // CC1 active rising, CC2 active falling
@@ -86,6 +94,9 @@ void couter_enable()
 
     // w tym przykładzie na PA1 wpuszczamy sygnał i debuggerem sprawdzamy do ilu doliczył
     // licznik od zbocza narastającego do narastającego (CCR1) i od zbocza narastającego do opadającego (CCR2)
+
+    // dobrze byłoby wygenerowac przerwanie od zbocza opadajacego 
+    TIM2->DIER |=TIM_DIER_CC2IE;
 }
 
 // Funkcja odczytuje dane z interfejsu UART
@@ -111,7 +122,7 @@ int main(void)
     // Inicjalizacja przycisku
     button_init();
     // Inicjalizacja timera
-    timer_init();
+    timer1_init();
     // Ustaw pin PC13 jako wyjście
     GPIOC->CRH |= GPIO_CRH_MODE13_1;
     // Ustaw pin PC13 jako wejście
@@ -120,23 +131,10 @@ int main(void)
     NVIC_EnableIRQ(TIM1_UP_IRQn);
 
     couter_enable();
+
     // Pętla główna
     while (1)
     {
-        // // Jeśli stan logiczny pinu PB12 jest HIGH
-        // if (GPIOB->IDR & GPIO_IDR_IDR12)
-        // {
-        //     GPIOC->ODR ^= GPIO_ODR_ODR13;
-        //     // Ustaw flagę isButtonPressed na True
-        //     isButtonPressed = 1;
-        //     // Miejsce kodu do mrugania diodą
-        // }
 
-        // // Jeśli stan logiczny pinu PB12 jest LOW
-        // else
-        // {
-        //     // Ustaw flagę isButtonPressed na False
-        //     isButtonPressed = 0;
-        // }
     }
 }
