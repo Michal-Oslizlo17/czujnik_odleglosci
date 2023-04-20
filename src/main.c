@@ -105,7 +105,7 @@ void couter_enable()
     // licznik od zbocza narastającego do narastającego (CCR1) i od zbocza narastającego do opadającego (CCR2)
 
     // dobrze byłoby wygenerowac przerwanie od zbocza opadajacego
-    TIM2->DIER |= TIM_DIER_CC2IE;
+    TIM2->DIER |= TIM_DIER_CC2IE | TIM_DIER_CC1IE;
 }
 
 // Funkcja odczytuje dane z interfejsu UART
@@ -138,6 +138,7 @@ int main(void)
     GPIOC->CRH &= ~GPIO_CRH_CNF13_0;
     // Włącz NVIC dla przerwań timera1
     NVIC_EnableIRQ(TIM1_UP_IRQn);
+    NVIC_EnableIRQ(TIM2_IRQn);
 
     couter_enable();
 
