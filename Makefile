@@ -22,12 +22,18 @@ CFLAGS = $(INC) -mcpu=cortex-m3 -mthumb -mfloat-abi=soft -g3 -O0 $(PROC) $(CMSIS
 LFLAGS = -mcpu=cortex-m3 -mthumb -mfloat-abi=soft -specs=nosys.specs -T STM32F103C8Tx_FLASH.ld -Wl,--gc-sections -lm  
 
 #Linking
-all: main.o startup_stm32f103xb.o
-	$(LD) $(LFLAGS)  output/main.o output/startup_stm32f103xb.o -o output/program.elf $(CMSIS_LIBD)  $(CMSIS_LIB)
+all: uart.o timery.o main.o startup_stm32f103xb.o
+	$(LD) $(LFLAGS)  output/uart.o output/timery.o output/main.o output/startup_stm32f103xb.o -o output/program.elf $(CMSIS_LIBD)  $(CMSIS_LIB)
 
 #Compiling main.c
 main.o: src/main.c
 	$(CC) $(CFLAGS) -c src/main.c -o output/main.o
+
+timery.o: src/timery.c
+	$(CC) $(CFLAGS) -c src/timery.c -o output/timery.o 
+
+uart.o: src/timery.c
+	$(CC) $(CFLAGS) -c src/uart.c -o output/uart.o
 
 #Compiling startup_stm32f103xb.s
 startup_stm32f103xb.o: src/startup_stm32f103xb.s
