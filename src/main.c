@@ -1,14 +1,11 @@
 #include "stm32f103xb.h" // Inicjalizacja zmiennej wskaźnika opóźnienia
 #include "timery.h"
+#include "uart.h"
 #include <string.h>
 volatile uint8_t isButtonPressed;
-
-
 #define BUFFER_SIZE 64
 char buffer[BUFFER_SIZE];
 int buffer_index = 0;
-
-
 
 // Funkcja inicjalizacji przycisku
 void button_init(void)
@@ -22,10 +19,6 @@ void button_init(void)
     // Ustaw stan logiczny na HIGH
     GPIOB->ODR |= GPIO_ODR_ODR12;
 }
-
-
-
-
 
 // Funkcja główna
 int main(void)
@@ -44,11 +37,13 @@ int main(void)
     // Włącz NVIC dla przerwań timera1
     NVIC_EnableIRQ(TIM1_UP_IRQn);
     NVIC_EnableIRQ(TIM2_IRQn);
+    uart_init();
 
     couter_enable();
 
     // Pętla główna
     while (1)
     {
+        USART1_SendByte('a');
     }
 }
