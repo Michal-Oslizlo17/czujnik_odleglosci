@@ -7,6 +7,8 @@ volatile int time;
 char buffer[BUFFER_SIZE];
 int buffer_index = 0;
 
+volatile int liczba_tickow=0;
+
 void SysTick_Handler() // SysTick
 {
     if (time)
@@ -69,9 +71,16 @@ void button_init(void)
 
 void TIM2_IRQHandler()
 {
-    if(TIM2->SR && TIM_SR_CC1IF)
+    if (TIM2->SR && TIM_SR_CC1IF) // narastanie
     {
         TIM2->SR &= ~TIM_SR_CC1IF; // skasowanie tej flagi
+        liczba_tickow=0;
+    }
+
+    if (TIM2->SR && TIM_SR_CC2IF) // opadanie
+    {
+        TIM2->SR &= ~TIM_SR_CC2IF; // skasowanie tej flagi
+        liczba_tickow=TIM2->CCR2 - TIM2->CCMR1;
     }
 }
 
@@ -79,8 +88,8 @@ void couter_enable()
 {
     // PA0 in reset state, floating , input
     RCC->APB2ENR |= RCC_APB2ENR_IOPCEN | RCC_APB2ENR_IOPAEN; // enable clock to C, Tim2
-    RCC->APB1ENR |= RCC_APB1ENR_TIM2EN; // apb1 dziala na 
-    TIM2->CCMR1 |= TIM_CCMR1_CC1S_0 | TIM_CCMR1_CC2S_1; // IC1 is mapped on TI1, IC2 is mapped on TI1
+    RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;                      // apb1 dziala na
+    TIM2->CCMR1 |= TIM_CCMR1_CC1S_0 | TIM_CCMR1_CC2S_1;      // IC1 is mapped on TI1, IC2 is mapped on TI1
     TIM2->CCER &= ~TIM_CCER_CC1P;
     TIM2->CCER |= TIM_CCER_CC2P;                 // CC1 active rising, CC2 active falling
     TIM2->SMCR |= TIM_SMCR_TS_2 | TIM_SMCR_TS_0; // Trigger is TI1FP1
@@ -95,8 +104,8 @@ void couter_enable()
     // w tym przykładzie na PA1 wpuszczamy sygnał i debuggerem sprawdzamy do ilu doliczył
     // licznik od zbocza narastającego do narastającego (CCR1) i od zbocza narastającego do opadającego (CCR2)
 
-    // dobrze byłoby wygenerowac przerwanie od zbocza opadajacego 
-    TIM2->DIER |=TIM_DIER_CC2IE;
+    // dobrze byłoby wygenerowac przerwanie od zbocza opadajacego
+    TIM2->DIER |= TIM_DIER_CC2IE;
 }
 
 // Funkcja odczytuje dane z interfejsu UART
@@ -135,6 +144,5 @@ int main(void)
     // Pętla główna
     while (1)
     {
-
     }
 }
