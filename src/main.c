@@ -44,7 +44,7 @@ int main(void)
     // Pętla główna
     while (1)
     {
-        if (odczytano == 1)
-            USART1_SendByte('a');
+      //  if (odczytano == 1)
+       //     USART1_SendByte('a');
     }
 }
