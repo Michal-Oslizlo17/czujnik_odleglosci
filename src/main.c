@@ -24,7 +24,7 @@ void button_init(void)
 // Funkcja główna
 int main(void)
 {
-    SysTick_Config(200000);                       // Domyślnie: SysTick_Config(8000);
+    SysTick_Config(4095);                         // Domyślnie: SysTick_Config(8000);
     SysTick->CTRL &= ~SysTick_CTRL_CLKSOURCE_Msk; // 8000000/8
 
     // Inicjalizacja przycisku
@@ -39,17 +39,32 @@ int main(void)
     NVIC_EnableIRQ(TIM1_UP_IRQn);
     NVIC_EnableIRQ(TIM2_IRQn);
     uart_init();
+    // Ustaw pin PA1 jako wyjście
+    
+    GPIOA->CRL &= ~GPIO_CRL_CNF1_0;
+    GPIOA->CRL |= GPIO_CRL_MODE1_1;
 
     couter_enable();
-    char wynik[10];
+    char wynik_cstring[10];
 
     // Pętla główna
     while (1)
     {
         if (odczytano == 1)
         {
-            ftoa(odleglosc, wynik, 2);
+            if (odleglosc_cm <= 40)
+            {
+                GPIOA->ODR |= GPIO_ODR_ODR1;
+            }
+            else
+            {
+                GPIOA->ODR &= ~GPIO_ODR_ODR1;
+            }
+
+            ftoa(odleglosc_cm, wynik_cstring, 2);
+            USART1_SendCString(wynik_cstring, 10);
             USART1_SendByte('\n');
+            odczytano = 0;
         }
     }
 }

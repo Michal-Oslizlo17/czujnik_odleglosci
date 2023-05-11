@@ -41,19 +41,22 @@ void USART1_IRQHander(void)
 
 void USART1_SendByte(uint8_t d)
 {
-
-    USART1->DR = d;
-    while (USART1->SR && USART_SR_TC)
+    while (!(USART1->SR && USART_SR_TC))
     {
     }
+    USART1->DR = d;
 }
 
-
-void USART1_SendCString(char * cs, int n)
+void USART1_SendCString(char *cs, int n)
 {
-    for (uint8_t i = 0; i < n; i++)
+    int i = 0;
+    while (cs[i] != 0)
     {
         USART1_SendByte((uint8_t)cs[i]);
+        i++;
     }
-    
+    for (uint8_t i = 0; i < 10; i++)
+    {
+        cs[i] = 0;
+    }
 }
