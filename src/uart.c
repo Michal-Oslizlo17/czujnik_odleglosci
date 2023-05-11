@@ -47,3 +47,13 @@ void USART1_SendByte(uint8_t d)
     {
     }
 }
+
+
+void USART1_SendCString(char * cs, int n)
+{
+    for (uint8_t i = 0; i < n; i++)
+    {
+        USART1_SendByte((uint8_t)cs[i]);
+    }
+    
+}

@@ -5,6 +5,8 @@ volatile  int time;
 volatile  uint32_t delayVar; // Flagę, która będzie ustawiona na True, jeśli przycisk jest wciśnięty
 volatile int liczba_tickow = 0;
 volatile uint8_t odczytano = 0;
+volatile float czas_powrotu_sygnalu_us=0;
+volatile float odleglosc=0;
 
 // Funkcja inicjalizacji timera
 void timer1_init(void)
@@ -66,6 +68,9 @@ void TIM2_IRQHandler()
     {
         TIM2->SR &= ~TIM_SR_CC2IF; // skasowanie tej flagi
         liczba_tickow = TIM2->CCR2 - TIM2->CCMR1;
+        czas_powrotu_sygnalu_us = liczba_tickow/(float)8;
+        odleglosc = (czas_powrotu_sygnalu_us*34) /  1000 / 2;
+
         odczytano = 1;
     }
 }
@@ -74,7 +79,7 @@ void couter_enable()
 {
     // PA0 in reset state, floating , input
     RCC->APB2ENR |= RCC_APB2ENR_IOPCEN | RCC_APB2ENR_IOPAEN; // enable clock to C, Tim2
-    RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;                      // apb1 dziala na
+    RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;                      // apb1 dziala na 8MHZ chyba
     TIM2->CCMR1 |= TIM_CCMR1_CC1S_0 | TIM_CCMR1_CC2S_1;      // IC1 is mapped on TI1, IC2 is mapped on TI1
     TIM2->CCER &= ~TIM_CCER_CC1P;
     TIM2->CCER |= TIM_CCER_CC2P;                 // CC1 active rising, CC2 active falling

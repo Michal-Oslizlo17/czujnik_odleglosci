@@ -1,6 +1,7 @@
 #include "stm32f103xb.h" // Inicjalizacja zmiennej wskaźnika opóźnienia
 #include "timery.h"
 #include "uart.h"
+#include "ftoa.h"
 #include <string.h>
 volatile uint8_t isButtonPressed;
 #define BUFFER_SIZE 64
@@ -40,11 +41,15 @@ int main(void)
     uart_init();
 
     couter_enable();
+    char wynik[10];
 
     // Pętla główna
     while (1)
     {
-      //  if (odczytano == 1)
-       //     USART1_SendByte('a');
+        if (odczytano == 1)
+        {
+            ftoa(odleglosc, wynik, 2);
+            USART1_SendByte('\n');
+        }
     }
 }
