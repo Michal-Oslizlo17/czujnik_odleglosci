@@ -10,5 +10,6 @@ void delay_ms(int t);
 void TIM1_UP_IRQHandler(void);
 void TIM2_IRQHandler();
 void couter_enable();
+void configure_GPIO_inputs(void);
 
 #endif /* TIMERY */

@@ -1,12 +1,12 @@
 #include "stm32f103xb.h" // Inicjalizacja zmiennej wskaźnika opóźnienia
 #include "timery.h"
 
-volatile  int time;
-volatile  uint32_t delayVar; // Flagę, która będzie ustawiona na True, jeśli przycisk jest wciśnięty
+volatile int time;
+volatile uint32_t delayVar; // Flagę, która będzie ustawiona na True, jeśli przycisk jest wciśnięty
 volatile int liczba_tickow = 0;
 volatile uint8_t odczytano = 0;
-volatile float czas_powrotu_sygnalu_us=0;
-volatile float odleglosc_cm=0;
+volatile float czas_powrotu_sygnalu_us = 0;
+volatile float odleglosc_cm = 0;
 
 // Funkcja inicjalizacji timera
 void timer1_init(void)
@@ -19,7 +19,6 @@ void timer1_init(void)
     TIM1->PSC = 8 - 1;
     // Ustaw wartość rejestru ARR na 100kHz/100-1kHz
     TIM1->ARR = 10 - 1;
-
 }
 
 void SysTick_Handler() // SysTick
@@ -66,8 +65,8 @@ void TIM2_IRQHandler()
     {
         TIM2->SR &= ~TIM_SR_CC2IF; // skasowanie tej flagi
         liczba_tickow = TIM2->CCR2 - TIM2->CCMR1;
-        czas_powrotu_sygnalu_us = liczba_tickow/(float)8;
-        odleglosc_cm = (czas_powrotu_sygnalu_us*34) /  1000 / 2;
+        czas_powrotu_sygnalu_us = liczba_tickow / (float)8;
+        odleglosc_cm = (czas_powrotu_sygnalu_us * 34) / 1000 / 2;
 
         odczytano = 1;
     }
@@ -96,3 +95,17 @@ void couter_enable()
     // dobrze byłoby wygenerowac przerwanie od zbocza opadajacego
     TIM2->DIER |= TIM_DIER_CC2IE | TIM_DIER_CC1IE;
 }
+
+
+// // Funkcja inicjalizacji przycisku
+// void button_init(void)
+// {
+//     // Włącz zegar dla portu GPIOB
+//     RCC->APB2ENR |= RCC_APB2ENR_IOPBEN;
+//     // Ustaw pin 12 jako wyjście
+//     GPIOB->CRH |= GPIO_CRH_MODE12_0;
+//     // Ustaw pin 12 jako zwykłe wejście
+//     GPIOB->CRH &= ~GPIO_CRH_CNF12_0;
+//     // Ustaw stan logiczny na HIGH
+//     GPIOB->ODR |= GPIO_ODR_ODR12;
+// }
