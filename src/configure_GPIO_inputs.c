@@ -1,6 +1,3 @@
-
-
-
 #include "stm32f103xb.h" // Inicjalizacja zmiennej wskaźnika opóźnienia
 #include "../include/configure_GPIO_inputs.h"
 
@@ -34,4 +31,73 @@ void configure_GPIO_inputs(void)
 
     // Ustaw pin PC13 jako wejście
     GPIOC->CRH &= ~GPIO_CRH_CNF13_0;
+}
+
+void wyswietlacz_segment_a(uint8_t s)
+{
+    if (s == 1)
+        GPIOB->ODR |= GPIO_ODR_ODR3;
+    else if (s == 0)
+        GPIOB->ODR &= ~GPIO_ODR_ODR3;
+}
+
+void wyswietlacz_segment_b(uint8_t s)
+{
+    if (s == 1)
+        GPIOB->ODR |= GPIO_ODR_ODR4;
+    else if (s == 0)
+        GPIOB->ODR &= ~GPIO_ODR_ODR4;
+}
+
+void wyswietlacz_segment_c(uint8_t s)
+{
+    if (s == 1)
+        GPIOB->ODR |= GPIO_ODR_ODR5;
+    else if (s == 0)
+        GPIOB->ODR &= ~GPIO_ODR_ODR5;
+}
+
+void wyswietlacz_d(uint8_t s)
+{
+    if (s == 1)
+        GPIOB->ODR |= GPIO_ODR_ODR12;
+    else if (s == 0)
+        GPIOB->ODR &= ~GPIO_ODR_ODR12;
+}
+
+void wyswietlacz_segment_e(uint8_t s)
+{
+    if (s == 1)
+        GPIOB->ODR |= GPIO_ODR_ODR13;
+    else if (s == 0)
+        GPIOB->ODR &= ~GPIO_ODR_ODR13;
+}
+
+void wyswietlacz_segment_f(uint8_t s)
+{
+    if (s == 1)
+        GPIOB->ODR |= GPIO_ODR_ODR14;
+    else if (s == 0)
+        GPIOB->ODR &= ~GPIO_ODR_ODR14;
+}
+
+void wyswietlacz_segment_g(uint8_t s)
+{
+    if (s == 1)
+        GPIOB->ODR |= GPIO_ODR_ODR15;
+    else if (s == 0)
+        GPIOB->ODR &= ~GPIO_ODR_ODR15;
+}
+
+void wyswietlacz_segment_on_off(uint8_t liczba)
+{
+    switch (liczba)
+    {
+    case 0:
+        wyswietlacz_segment_prawo_gora(1);
+        break;
+
+    default:
+        break;
+    }
 }

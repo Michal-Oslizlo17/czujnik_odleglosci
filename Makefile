@@ -48,4 +48,3 @@ startup_stm32f103xb.o: src/startup_stm32f103xb.s
 #Cleaning
 clean:
 	del output\*.* /q
-
