@@ -36,21 +36,28 @@ int main(void)
     // Pętla główna
     while (1)
     {
-        if (odczytano == 1)
-        {
-            if (odleglosc_cm <= 40)
-            {
-                GPIOA->ODR |= GPIO_ODR_ODR1;
-            }
-            else
-            {
-                GPIOA->ODR &= ~GPIO_ODR_ODR1;
-            }
+        // if (odczytano == 1)
+        // {
+        //     if (odleglosc_cm <= 40)
+        //     {
+        //         GPIOA->ODR |= GPIO_ODR_ODR1;
+        //     }
+        //     else
+        //     {
+        //         GPIOA->ODR &= ~GPIO_ODR_ODR1;
+        //     }
 
-            ftoa(odleglosc_cm, wynik_cstring, 2);
-            USART1_SendCString(wynik_cstring, 10);
-            USART1_SendByte('\n');
-            odczytano = 0;
-        }
+        //     ftoa(odleglosc_cm, wynik_cstring, 2);
+        //     USART1_SendCString(wynik_cstring, 10);
+        //     USART1_SendByte('\n');
+        //     odczytano = 0;
+        // }
+        wyswietlacz_liczba_jeden(1);
+        wyswietlacz_liczba_jeden(0);
+        wyswietlacz_segment_a(1);
+        wyswietlacz_segment_b(1);
+        wyswietlacz_segment_c(1);
+        wyswietlacz_segment_d(1);
+        
     }
 }
