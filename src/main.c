@@ -53,11 +53,43 @@ int main(void)
         //     odczytano = 0;
         // }
         wyswietlacz_liczba_jeden(1);
-        wyswietlacz_liczba_jeden(0);
         wyswietlacz_segment_a(1);
         wyswietlacz_segment_b(1);
         wyswietlacz_segment_c(1);
         wyswietlacz_segment_d(1);
-        
+        wyswietlacz_segment_e(1);
+        wyswietlacz_segment_f(1);
+        wyswietlacz_segment_g(1);
+        wyswietlacz_liczba_jeden(0);
+
+        wyswietlacz_liczba_jeden(1);
+        wyswietlacz_segment_a(1);
+        wyswietlacz_segment_b(1);
+        wyswietlacz_segment_c(1);
+        wyswietlacz_segment_d(1);
+        wyswietlacz_segment_e(1);
+        wyswietlacz_segment_f(1);
+        wyswietlacz_segment_g(1);
+        wyswietlacz_liczba_dwa(0);
+
+        wyswietlacz_liczba_jeden(1);
+        wyswietlacz_segment_a(1);
+        wyswietlacz_segment_b(1);
+        wyswietlacz_segment_c(1);
+        wyswietlacz_segment_d(1);
+        wyswietlacz_segment_e(1);
+        wyswietlacz_segment_f(1);
+        wyswietlacz_segment_g(1);
+        wyswietlacz_liczba_trzy(0);
+
+        wyswietlacz_liczba_jeden(1);
+        wyswietlacz_segment_a(1);
+        wyswietlacz_segment_b(1);
+        wyswietlacz_segment_c(1);
+        wyswietlacz_segment_d(1);
+        wyswietlacz_segment_e(1);
+        wyswietlacz_segment_f(1);
+        wyswietlacz_segment_g(1);
+        wyswietlacz_liczba_cztery(0);
     }
 }
