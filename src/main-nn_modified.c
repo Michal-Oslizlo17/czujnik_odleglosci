@@ -6,7 +6,7 @@
 // -------> Twój zmodyfikowany kod:
 
 // Funkcja, która uruchamia timer, gdy jest stan wysoki na PC13 i sprawdza, czy stan niski jest wystarczający, aby zatrzymać timer
-void timerCheck (void) 
+void timerCheck(void) 
 {
     // Sprawdź, czy stan logiczny pinu PC13 jest wysoki
     if (GPIOC->ODR & GPIO_ODR_ODR13) 
