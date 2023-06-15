@@ -52,6 +52,11 @@ int main(void)
         //     USART1_SendByte('\n');
         //     odczytano = 0;
         // }
+wyswietlacz_liczba_jeden(0);
+wyswietlacz_liczba_dwa(0);
+wyswietlacz_liczba_trzy(0);
+wyswietlacz_liczba_cztery(0);
+
         wyswietlacz_liczba_jeden(1);
         wyswietlacz_segment_a(1);
         wyswietlacz_segment_b(1);
@@ -62,7 +67,7 @@ int main(void)
         wyswietlacz_segment_g(1);
         wyswietlacz_liczba_jeden(0);
 
-        wyswietlacz_liczba_jeden(1);
+        wyswietlacz_liczba_dwa(1);
         wyswietlacz_segment_a(1);
         wyswietlacz_segment_b(1);
         wyswietlacz_segment_c(1);
@@ -72,7 +77,7 @@ int main(void)
         wyswietlacz_segment_g(1);
         wyswietlacz_liczba_dwa(0);
 
-        wyswietlacz_liczba_jeden(1);
+        wyswietlacz_liczba_trzy(1);
         wyswietlacz_segment_a(1);
         wyswietlacz_segment_b(1);
         wyswietlacz_segment_c(1);
@@ -82,7 +87,7 @@ int main(void)
         wyswietlacz_segment_g(1);
         wyswietlacz_liczba_trzy(0);
 
-        wyswietlacz_liczba_jeden(1);
+        wyswietlacz_liczba_cztery(1);
         wyswietlacz_segment_a(1);
         wyswietlacz_segment_b(1);
         wyswietlacz_segment_c(1);
@@ -93,3 +98,10 @@ int main(void)
         wyswietlacz_liczba_cztery(0);
     }
 }
+
+
+// TODO
+
+//zrobić funkcje
+
+//wlacz_wyswietlacz(jaka cyfra, jaki numer_wyswietlacza, wlacz/wylacz)
