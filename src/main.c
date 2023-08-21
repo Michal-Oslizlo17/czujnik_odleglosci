@@ -4,6 +4,7 @@
 #include "ftoa.h"
 #include <string.h>
 #include "../include/configure_GPIO_inputs.h"
+#include "../include/wyswietlacze.h"
 
 volatile uint8_t isButtonPressed;
 #define BUFFER_SIZE 64
