@@ -69,10 +69,10 @@ if (odczytano == 1)
         int fraction_int = atoi(comma_pos + 1);  // Przetwórz część po przecinku na liczbę całkowitą
 
         // Wyłącz wszystkie wyświetlacze
-        wlacz_wyswietlacz(0, 1, 1);
-        wlacz_wyswietlacz(0, 2, 1);
-        wlacz_wyswietlacz(0, 3, 1);
-        wlacz_wyswietlacz(0, 4, 1);
+        wlacz_wyswietlacz(0, 1, 0);
+        wlacz_wyswietlacz(0, 2, 0);
+        wlacz_wyswietlacz(0, 3, 0);
+        wlacz_wyswietlacz(0, 4, 0);
 
         // Podziel liczbę przed przecinkiem na poszczególne cyfry i wyświetl na odpowiednich wyświetlaczach
         int digit = 0;
