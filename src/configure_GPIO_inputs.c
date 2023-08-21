@@ -249,4 +249,44 @@ void wyswietlacz_segment_on_off(uint8_t liczba)
     default:
         break;
     }
+
+void wlacz_wyswietlacz(uint8_t jaka_cyfra, uint8_t numer_wyswietlacza, uint8_t wlacz)
+{
+    if (jaka_cyfra >= 0 && jaka_cyfra <= 9)
+    {
+        switch (numer_wyswietlacza)
+        {
+            case 1:
+                wyswietlacz_liczba_jeden(wlacz == 0 ? 0 : 1);
+                break;
+            case 2:
+                wyswietlacz_liczba_dwa(wlacz == 0 ? 0 : 1);
+                break;
+            case 3:
+                wyswietlacz_liczba_trzy(wlacz == 0 ? 0 : 1);
+                break;
+            case 4:
+                wyswietlacz_liczba_cztery(wlacz == 0 ? 0 : 1);
+                break;            
+            default:
+                break;
+        }
+
+        if (wlacz)
+        {
+            wyswietlacz_segment_on_off(jaka_cyfra);
+        }
+        else
+        {
+            // Wyłącz wszystkie segmenty
+            wyswietlacz_segment_a(0);
+            wyswietlacz_segment_b(0);
+            wyswietlacz_segment_c(0);
+            wyswietlacz_segment_d(0);
+            wyswietlacz_segment_e(0);
+            wyswietlacz_segment_f(0);
+            wyswietlacz_segment_g(0);
+        }
+    }
+}
 }
