@@ -11,7 +11,6 @@ volatile uint8_t isButtonPressed;
 char buffer[BUFFER_SIZE];
 int buffer_index = 0;
 
-// Funkcja główna
 int main(void)
 {
     SysTick_Config(4095);
@@ -34,6 +33,51 @@ int main(void)
     couter_enable();
     char wynik_cstring[10];
 
+    wyswietlacz_liczba_jeden(0);
+    wyswietlacz_liczba_dwa(0);
+    wyswietlacz_liczba_trzy(0);
+    wyswietlacz_liczba_cztery(0);
+
+    wyswietlacz_liczba_jeden(1);
+    wyswietlacz_segment_a(1);
+    wyswietlacz_segment_b(1);
+    wyswietlacz_segment_c(1);
+    wyswietlacz_segment_d(1);
+    wyswietlacz_segment_e(1);
+    wyswietlacz_segment_f(1);
+    wyswietlacz_segment_g(1);
+    wyswietlacz_liczba_jeden(0);
+
+    wyswietlacz_liczba_dwa(1);
+    wyswietlacz_segment_a(1);
+    wyswietlacz_segment_b(1);
+    wyswietlacz_segment_c(1);
+    wyswietlacz_segment_d(1);
+    wyswietlacz_segment_e(1);
+    wyswietlacz_segment_f(1);
+    wyswietlacz_segment_g(1);
+    wyswietlacz_liczba_dwa(0);
+
+    wyswietlacz_liczba_trzy(1);
+    wyswietlacz_segment_a(1);
+    wyswietlacz_segment_b(1);
+    wyswietlacz_segment_c(1);
+    wyswietlacz_segment_d(1);
+    wyswietlacz_segment_e(1);
+    wyswietlacz_segment_f(1);
+    wyswietlacz_segment_g(1);
+    wyswietlacz_liczba_trzy(0);
+
+    wyswietlacz_liczba_cztery(1);
+    wyswietlacz_segment_a(1);
+    wyswietlacz_segment_b(1);
+    wyswietlacz_segment_c(1);
+    wyswietlacz_segment_d(1);
+    wyswietlacz_segment_e(1);
+    wyswietlacz_segment_f(1);
+    wyswietlacz_segment_g(1);
+    wyswietlacz_liczba_cztery(0);
+
     // Pętla główna
     while (1)
     {
@@ -47,13 +91,12 @@ int main(void)
         //     {
         //         GPIOA->ODR &= ~GPIO_ODR_ODR1;
         //     }
-
         //     ftoa(odleglosc_cm, wynik_cstring, 2);
         //     USART1_SendCString(wynik_cstring, 10);
         //     USART1_SendByte('\n');
         //     odczytano = 0;
         // }
-        
+
         // Jeśli odczytano dane, przetwórz je i wyświetl na wyświetlaczach
         if (odczytano == 1)
         {
@@ -62,7 +105,7 @@ int main(void)
             USART1_SendByte('\n');
 
             char *comma_pos = strchr(wynik_cstring, ',');
-            
+
             if (comma_pos != NULL)
             {
                 *comma_pos = '\0';
@@ -101,56 +144,11 @@ int main(void)
 
             odczytano = 0;
         }
-
-        // wyswietlacz_liczba_jeden(0);
-        // wyswietlacz_liczba_dwa(0);
-        // wyswietlacz_liczba_trzy(0);
-        // wyswietlacz_liczba_cztery(0);
-
-        // wyswietlacz_liczba_jeden(1);
-        // wyswietlacz_segment_a(1);
-        // wyswietlacz_segment_b(1);
-        // wyswietlacz_segment_c(1);
-        // wyswietlacz_segment_d(1);
-        // wyswietlacz_segment_e(1);
-        // wyswietlacz_segment_f(1);
-        // wyswietlacz_segment_g(1);
-        // wyswietlacz_liczba_jeden(0);
-
-        // wyswietlacz_liczba_dwa(1);
-        // wyswietlacz_segment_a(1);
-        // wyswietlacz_segment_b(1);
-        // wyswietlacz_segment_c(1);
-        // wyswietlacz_segment_d(1);
-        // wyswietlacz_segment_e(1);
-        // wyswietlacz_segment_f(1);
-        // wyswietlacz_segment_g(1);
-        // wyswietlacz_liczba_dwa(0);
-
-        // wyswietlacz_liczba_trzy(1);
-        // wyswietlacz_segment_a(1);
-        // wyswietlacz_segment_b(1);
-        // wyswietlacz_segment_c(1);
-        // wyswietlacz_segment_d(1);
-        // wyswietlacz_segment_e(1);
-        // wyswietlacz_segment_f(1);
-        // wyswietlacz_segment_g(1);
-        // wyswietlacz_liczba_trzy(0);
-
-        // wyswietlacz_liczba_cztery(1);
-        // wyswietlacz_segment_a(1);
-        // wyswietlacz_segment_b(1);
-        // wyswietlacz_segment_c(1);
-        // wyswietlacz_segment_d(1);
-        // wyswietlacz_segment_e(1);
-        // wyswietlacz_segment_f(1);
-        // wyswietlacz_segment_g(1);
-        // wyswietlacz_liczba_cztery(0);
     }
 }
 
 // TODO
 
-//zrobić funkcje
+// zrobić funkcje
 
-//wlacz_wyswietlacz(jaka cyfra, jaki numer_wyswietlacza, wlacz/wylacz)
+// wlacz_wyswietlacz(jaka cyfra, jaki numer_wyswietlacza, wlacz/wylacz)
