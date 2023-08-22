@@ -203,6 +203,10 @@ void wlacz_wyswietlacz(uint8_t jaka_cyfra, uint8_t numer_wyswietlacza, uint8_t w
 {
     if (jaka_cyfra >= 0 && jaka_cyfra <= 9)
     {
+        wyswietlacz_liczba_jeden(0);
+        wyswietlacz_liczba_dwa(0);
+        wyswietlacz_liczba_trzy(0);
+        wyswietlacz_liczba_cztery(0);
         switch (numer_wyswietlacza)
         {
             case 1:
