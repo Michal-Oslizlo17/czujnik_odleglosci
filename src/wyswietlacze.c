@@ -119,15 +119,15 @@ void wyswietlacz_segment_on_off(uint8_t liczba)
         wyswietlacz_segment_a(1);
         wyswietlacz_segment_b(1);
         wyswietlacz_segment_c(1);
-        wyswietlacz_segment_d(0);
-        wyswietlacz_segment_e(1);
+        wyswietlacz_segment_d(1);
+        wyswietlacz_segment_e(0);
         wyswietlacz_segment_f(0);
         wyswietlacz_segment_g(1);
         break;
 
     case 4:
         wyswietlacz_segment_a(0);
-        wyswietlacz_segment_b(0);
+        wyswietlacz_segment_b(1);
         wyswietlacz_segment_c(1);
         wyswietlacz_segment_d(0);
         wyswietlacz_segment_e(0);
@@ -198,31 +198,45 @@ void wyswietlacz_segment_on_off(uint8_t liczba)
     default:
         break;
     }
+}
 
+void wylacz_wszystkie_wyswietlacze()
+{
+    // Wygasza wszystkie wysweietlacze
+    wyswietlacz_liczba_jeden(0);
+    wyswietlacz_liczba_dwa(0);
+    wyswietlacz_liczba_trzy(0);
+    wyswietlacz_liczba_cztery(0);
+}
+
+/**
+ * @brief
+ *
+ * @param jaka_cyfra
+ * @param numer_wyswietlacza
+ * @param wlacz
+ */
 void wlacz_wyswietlacz(uint8_t jaka_cyfra, uint8_t numer_wyswietlacza, uint8_t wlacz)
 {
     if (jaka_cyfra >= 0 && jaka_cyfra <= 9)
     {
-        wyswietlacz_liczba_jeden(0);
-        wyswietlacz_liczba_dwa(0);
-        wyswietlacz_liczba_trzy(0);
-        wyswietlacz_liczba_cztery(0);
+
         switch (numer_wyswietlacza)
         {
-            case 1:
-                wyswietlacz_liczba_jeden(wlacz == 0 ? 0 : 1);
-                break;
-            case 2:
-                wyswietlacz_liczba_dwa(wlacz == 0 ? 0 : 1);
-                break;
-            case 3:
-                wyswietlacz_liczba_trzy(wlacz == 0 ? 0 : 1);
-                break;
-            case 4:
-                wyswietlacz_liczba_cztery(wlacz == 0 ? 0 : 1);
-                break;            
-            default:
-                break;
+        case 1:
+            wyswietlacz_liczba_jeden(wlacz == 0 ? 0 : 1);
+            break;
+        case 2:
+            wyswietlacz_liczba_dwa(wlacz == 0 ? 0 : 1);
+            break;
+        case 3:
+            wyswietlacz_liczba_trzy(wlacz == 0 ? 0 : 1);
+            break;
+        case 4:
+            wyswietlacz_liczba_cztery(wlacz == 0 ? 0 : 1);
+            break;
+        default:
+            break;
         }
 
         if (wlacz)

@@ -19,6 +19,8 @@ void timer1_init(void)
     TIM1->PSC = 8 - 1;
     // Ustaw wartość rejestru ARR na 100kHz/100-1kHz
     TIM1->ARR = 10 - 1;
+
+    // Ustawienie tego zegara jest takie, by wlaczyl pik na 10us i sie wylaczyl
 }
 
 void SysTick_Handler() // SysTick
@@ -26,7 +28,7 @@ void SysTick_Handler() // SysTick
     if (time)
         time--;
 
-    TIM1->CR1 |= TIM_CR1_CEN;
+    TIM1->CR1 |= TIM_CR1_CEN; // WLACZ LICZNIK
 }
 void delay_ms(int t) // Opóźnienie (ms)
 {
@@ -41,11 +43,11 @@ void TIM1_UP_IRQHandler(void)
     // Sprawdź, jaka sytuacja wywołała przerwanie
     if (TIM1->SR & TIM_SR_UIF)
     {
-        if ((GPIOC->ODR & GPIO_ODR_ODR13))
-            TIM1->CR1 &= ~TIM_CR1_CEN;
+        if ((GPIOA->ODR & GPIO_ODR_ODR2))
+            TIM1->CR1 &= ~TIM_CR1_CEN;      // wylacz licznik
 
-        // Przełącz stan wyjścia PC13
-        GPIOC->ODR ^= GPIO_ODR_ODR13;
+        // Przełącz stan wyjścia PC14
+        GPIOA->ODR ^= GPIO_ODR_ODR2;
         // Wyczyść flagę przerwania
         TIM1->SR &= ~TIM_SR_UIF;
         // Jeśli odliczanie jest większe od 0, zmniejsz go.
@@ -84,7 +86,7 @@ void couter_enable()
     TIM2->SMCR |= TIM_SMCR_SMS_2;                // Tim2 reset mode
     TIM2->CCER |= TIM_CCER_CC1E | TIM_CCER_CC2E; // enable capture
 
-    TIM2->PSC = 0;     // prescaler TIM1 as 1
+    TIM2->PSC = 0;     // prescaler TIM2 as 1
     TIM2->ARR = 65535; // Auto Reload = 65535
 
     TIM2->CR1 |= TIM_CR1_CEN; // counter enable

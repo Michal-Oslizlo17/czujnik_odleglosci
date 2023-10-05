@@ -55,8 +55,10 @@ void USART1_SendCString(char *cs, int n)
         USART1_SendByte((uint8_t)cs[i]);
         i++;
     }
-    for (uint8_t i = 0; i < 10; i++)
-    {
-        cs[i] = 0;
-    }
+
+    // Jak tu wyczyścisz przez wskaźnik to potem w stringu same zera i dalej nic z nim nie zrobisz - dywersja jakas :)
+    // for (uint8_t i = 0; i < 10; i++)
+    // {
+    //     cs[i] = 0;
+    // }
 }

@@ -22,8 +22,8 @@ CFLAGS = $(INC) -mcpu=cortex-m3 -mthumb -mfloat-abi=soft -g3 -O0 $(PROC) $(CMSIS
 LFLAGS = -mcpu=cortex-m3 -mthumb -mfloat-abi=soft -specs=nosys.specs -T STM32F103C8Tx_FLASH.ld -Wl,--gc-sections -lm  
 
 #Linking
-all: configure_GPIO_inputs.o ftoa.o uart.o timery.o main.o startup_stm32f103xb.o
-	$(LD) $(LFLAGS)  output/configure_GPIO_inputs.o output/ftoa.o output/uart.o output/timery.o output/main.o output/startup_stm32f103xb.o -o output/program.elf $(CMSIS_LIBD)  $(CMSIS_LIB)
+all: wyswietlacze.o configure_GPIO_inputs.o ftoa.o uart.o timery.o main.o startup_stm32f103xb.o
+	$(LD) $(LFLAGS) output/wyswietlacze.o output/configure_GPIO_inputs.o output/ftoa.o output/uart.o output/timery.o output/main.o output/startup_stm32f103xb.o -o output/program.elf $(CMSIS_LIBD)  $(CMSIS_LIB)
 
 #Compiling main.c
 main.o: src/main.c
@@ -31,6 +31,9 @@ main.o: src/main.c
 
 timery.o: src/timery.c
 	$(CC) $(CFLAGS) -c src/timery.c -o output/timery.o 
+
+wyswietlacze.o: src/wyswietlacze.c
+	$(CC) $(CFLAGS) -c src/wyswietlacze.c -o output/wyswietlacze.o 
 
 uart.o: src/timery.c
 	$(CC) $(CFLAGS) -c src/uart.c -o output/uart.o

@@ -13,8 +13,8 @@ int buffer_index = 0;
 
 int main(void)
 {
-    SysTick_Config(4095);
-    SysTick->CTRL &= ~SysTick_CTRL_CLKSOURCE_Msk;
+    SysTick_Config(2 * 8000000 / 8);
+    // SysTick->CTRL &= ~SysTick_CTRL_CLKSOURCE_Msk;
 
     // Inicjalizacja przycisku
     // button_init();
@@ -78,69 +78,36 @@ int main(void)
     wyswietlacz_segment_g(1);
     wyswietlacz_liczba_cztery(0);
 
+    int liczba[4];
     // Pętla główna
     while (1)
     {
-        // if (odczytano == 1)
-        // {
-        //     if (odleglosc_cm <= 40)
-        //     {
-        //         GPIOA->ODR |= GPIO_ODR_ODR1;
-        //     }
-        //     else
-        //     {
-        //         GPIOA->ODR &= ~GPIO_ODR_ODR1;
-        //     }
-        //     ftoa(odleglosc_cm, wynik_cstring, 2);
-        //     USART1_SendCString(wynik_cstring, 10);
-        //     USART1_SendByte('\n');
-        //     odczytano = 0;
-        // }
-
+        wylacz_wszystkie_wyswietlacze();
         // Jeśli odczytano dane, przetwórz je i wyświetl na wyświetlaczach
         if (odczytano == 1)
         {
-            ftoa(odleglosc_cm, wynik_cstring, 2);
+            // ftoa(odleglosc_cm, wynik_cstring, 2);
+            intToStr((int)odleglosc_cm, wynik_cstring, 4);
+
+            // Testowo wyrzucamy do USART. Przyda się do aplikacji
             USART1_SendCString(wynik_cstring, 10);
             USART1_SendByte('\n');
 
-            char *comma_pos = strchr(wynik_cstring, ',');
+            // Dalej zajmiemy się tylko czescia calkowita
+            // TODO - nie dziala wyswietlanie - do przerobienia 
+            // Trzeba zrobic funkcje dla kazdego wyswietlacza
+            // np. wyswietlacz1(liczba, on/off)
+            
+            liczba[0] = wynik_cstring[0] - 48;
+            liczba[1] = wynik_cstring[1] - 48;
+            liczba[2] = wynik_cstring[2] - 48;
+            liczba[3] = wynik_cstring[3] - 48;
 
-            if (comma_pos != NULL)
-            {
-                *comma_pos = '\0';
 
-                int distance_int = atoi(wynik_cstring);
-                int fraction_int = atoi(comma_pos + 1);
-
-                wlacz_wyswietlacz(0, 1, 0);
-                wlacz_wyswietlacz(0, 2, 0);
-                wlacz_wyswietlacz(0, 3, 0);
-                wlacz_wyswietlacz(0, 4, 0);
-
-                int digit = 0;
-                int number = distance_int;
-                int numer_wyswietlacza = 1;
-
-                while (number > 0 && numer_wyswietlacza <= 4)
-                {
-                    digit = number % 10;
-                    number /= 10;
-                    wlacz_wyswietlacz(digit, numer_wyswietlacza, 1);
-                    numer_wyswietlacza++;
-                }
-
-                number = fraction_int;
-                numer_wyswietlacza = 1;
-
-                while (number > 0 && numer_wyswietlacza <= 2)
-                {
-                    digit = number % 10;
-                    number /= 10;
-                    // wlacz_wyswietlacz(digit, numer_wyswietlacza + 2);
-                    // numer_wyswietlacza++;
-                }
-            }
+            wlacz_wyswietlacz(liczba[0], 1, 1);
+            wlacz_wyswietlacz(liczba[1], 2, 1);
+            wlacz_wyswietlacz(liczba[2], 3, 1);
+            wlacz_wyswietlacz(liczba[3], 4, 1);
 
             odczytano = 0;
         }

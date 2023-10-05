@@ -16,4 +16,6 @@ void wyswietlacz_segment_g(uint8_t);
 void wyswietlacz_segment_on_off(uint8_t);
 void wlacz_wyswietlacz(uint8_t, uint8_t, uint8_t);
 
+void wylacz_wszystkie_wyswietlacze();
+
 #endif /* WYSWIETLACZE */

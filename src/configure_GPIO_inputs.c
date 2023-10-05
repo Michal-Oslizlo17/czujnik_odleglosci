@@ -30,8 +30,9 @@ void configure_GPIO_inputs(void)
     GPIOA->CRL &= ~GPIO_CRL_CNF1_0;
     GPIOA->CRL |= GPIO_CRL_MODE1_1;
 
-    // Ustaw pin PC13 jako wyjście
-    GPIOC->CRH |= GPIO_CRH_MODE13_1;
+    // Ustaw pin A2 jako wyjście TRIG
+    GPIOA->CRL &= ~GPIO_CRL_CNF2_0;
+    GPIOA->CRL |= GPIO_CRL_MODE2_1;
 
     //*********************************************
     // WLACZANIE CYFR - konfiguracja pinow
@@ -50,5 +51,4 @@ void configure_GPIO_inputs(void)
     // Ustaw pin PB9 jako wyjście - Cyfra 4
     GPIOB->CRH &= ~GPIO_CRH_CNF9_0;
     GPIOB->CRH |= GPIO_CRH_MODE9_1;
-}
 }

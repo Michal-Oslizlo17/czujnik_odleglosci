@@ -38,8 +38,8 @@
   #pragma clang system_header   /* treat file as system include file */
 #endif
 
-#ifndef __CORE_CM3_H_GENERIC
-#define __CORE_CM3_H_GENERIC
+#ifndef CORE_CM3
+#define CORE_CM3
 
 #include <stdint.h>
 
@@ -167,7 +167,7 @@
 }
 #endif
 
-#endif /* __CORE_CM3_H_GENERIC */
+#endif /* CORE_CM3 */
 
 #ifndef __CMSIS_GENERIC
 
