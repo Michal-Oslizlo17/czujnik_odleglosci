@@ -1,7 +1,7 @@
-#ifndef CONFIGURE_GPIO_INPUTS
-#define CONFIGURE_GPIO_INPUTS
+#ifndef CONFIGURE_GPIO
+#define CONFIGURE_GPIO
 
-void configure_GPIO_inputs(void);
+void configure_GPIO(void);
 void wyswietlacz_segment_on_off(uint8_t);
 void wyswietlacz_liczba_jeden(uint8_t);
 void wyswietlacz_liczba_dwa(uint8_t);
@@ -15,4 +15,4 @@ void wyswietlacz_segment_e(uint8_t);
 void wyswietlacz_segment_f(uint8_t);
 void wyswietlacz_segment_g(uint8_t);
 
-#endif /* CONFIGURE_GPIO_INPUTS */
+#endif /* CONFIGURE_GPIO */

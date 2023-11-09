@@ -1,7 +1,7 @@
 #include "stm32f103xb.h" // Inicjalizacja zmiennej wskaźnika opóźnienia
-#include "../include/configure_GPIO_inputs.h"
+#include "../include/configure_GPIO.h"
 
-void configure_GPIO_inputs(void)
+void configure_GPIO(void)
 {
      RCC->APB2ENR |= RCC_APB2ENR_IOPBEN;
      RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;

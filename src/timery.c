@@ -8,6 +8,27 @@ volatile uint8_t odczytano = 0;
 volatile float czas_powrotu_sygnalu_us = 0;
 volatile float odleglosc_cm = 0;
 
+// Funkcja inicjalizacji timera3
+void timer3_init(void)
+{
+    RCC->APB1ENR |= RCC_APB1ENR_TIM3EN;
+    TIM3->DIER |= TIM_DIER_UIE;
+    TIM3->PSC = 2000 - 1;
+    TIM3->ARR = 1000 - 1;
+    TIM3->CR1 |= TIM_CR1_CEN; // WLACZ LICZNIK
+}
+
+void TIM3_IRQHandler()
+{
+    // Sprawdź, jaka sytuacja wywołała przerwanie
+    if (TIM3->SR & TIM_SR_UIF)
+    {
+        TIM3->SR &= ~TIM_SR_UIF;
+
+        TIM1->CR1 |= TIM_CR1_CEN; // WLACZ LICZNIK taktujacy
+    }
+}
+
 // Funkcja inicjalizacji timera
 void timer1_init(void)
 {
@@ -20,7 +41,8 @@ void timer1_init(void)
     // Ustaw wartość rejestru ARR na 100kHz/100-1kHz
     TIM1->ARR = 10 - 1;
 
-    // Ustawienie tego zegara jest takie, by wlaczyl pik na 10us i sie wylaczyl
+    TIM1->CR1 |= TIM_CR1_CEN; // WLACZ LICZNIK taktujacy
+                              // Ustawienie tego zegara jest takie, by wlaczyl pik na 10us i sie wylaczyl
 }
 
 // Zrobić config i handler dla timera 3.
@@ -29,8 +51,6 @@ void SysTick_Handler() // SysTick
 {
     if (time)
         time--;
-
-    TIM1->CR1 |= TIM_CR1_CEN; // WLACZ LICZNIK
 }
 void delay_ms(int t) // Opóźnienie (ms)
 {
@@ -46,7 +66,7 @@ void TIM1_UP_IRQHandler(void)
     if (TIM1->SR & TIM_SR_UIF)
     {
         if ((GPIOA->ODR & GPIO_ODR_ODR2))
-            TIM1->CR1 &= ~TIM_CR1_CEN;      // wylacz licznik
+            TIM1->CR1 &= ~TIM_CR1_CEN; // wylacz licznik
 
         // Przełącz stan wyjścia PC14
         GPIOA->ODR ^= GPIO_ODR_ODR2;
@@ -99,7 +119,6 @@ void couter_enable()
     // dobrze byłoby wygenerowac przerwanie od zbocza opadajacego
     TIM2->DIER |= TIM_DIER_CC2IE | TIM_DIER_CC1IE;
 }
-
 
 // // Funkcja inicjalizacji przycisku
 // void button_init(void)

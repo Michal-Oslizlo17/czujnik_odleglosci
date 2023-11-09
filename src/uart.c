@@ -41,9 +41,8 @@ void USART1_IRQHander(void)
 
 void USART1_SendByte(uint8_t d)
 {
-    while (!(USART1->SR && USART_SR_TC))
-    {
-    }
+    while ( !  (USART1->SR && USART_SR_TC) );
+
     USART1->DR = d;
 }
 

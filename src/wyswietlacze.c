@@ -1,5 +1,5 @@
 #include "stm32f103xb.h" // Inicjalizacja zmiennej wskaźnika opóźnienia
-#include "../include/configure_GPIO_inputs.h"
+#include "../include/configure_GPIO.h"
 
 // CYFRY
 void wyswietlacz_liczba_jeden(uint8_t s)
@@ -256,3 +256,5 @@ void wlacz_wyswietlacz(uint8_t jaka_cyfra, uint8_t numer_wyswietlacza, uint8_t w
         }
     }
 }
+
+

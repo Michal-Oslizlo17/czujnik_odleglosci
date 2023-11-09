@@ -3,7 +3,7 @@
 #include "uart.h"
 #include "ftoa.h"
 #include <string.h>
-#include "../include/configure_GPIO_inputs.h"
+#include "../include/configure_GPIO.h"
 #include "../include/wyswietlacze.h"
 
 volatile uint8_t isButtonPressed;
@@ -13,175 +13,62 @@ int buffer_index = 0;
 
 int main(void)
 {
-    SysTick_Config(2 * 8000000 / 8);
-    // SysTick->CTRL &= ~SysTick_CTRL_CLKSOURCE_Msk;
+    SysTick_Config(8000000 / 8000);
 
-    // Inicjalizacja przycisku
-    // button_init();
-
-    // Inicjalizacja timera
     timer1_init();
+    timer3_init();
+    couter_enable();
 
     // Włącz NVIC dla przerwań timera1
     NVIC_EnableIRQ(TIM1_UP_IRQn);
-    NVIC_EnableIRQ(TIM2_UP_IRQn);
-    
+    NVIC_EnableIRQ(TIM3_IRQn);
     NVIC_EnableIRQ(TIM2_IRQn);
     uart_init();
 
     // Konfiguracja portów
-    configure_GPIO_inputs();
+    configure_GPIO();
 
-    couter_enable();
+    
     char wynik_cstring[10];
-
-    wyswietlacz_liczba_jeden(0); // Masa
-    wyswietlacz_liczba_dwa(0);
-    wyswietlacz_liczba_trzy(0);
-    wyswietlacz_liczba_cztery(0);
-
-    wyswietlacz_liczba_jeden(1);
-    wyswietlacz_segment_a(1);
-    delay_ms(1);
-    wyswietlacz_segment_b(1);
-    delay_ms(1);
-    wyswietlacz_segment_c(1);
-    delay_ms(1);
-    wyswietlacz_segment_d(1);
-    delay_ms(1);
-    wyswietlacz_segment_e(1);
-    delay_ms(1);
-    wyswietlacz_segment_f(1);
-    delay_ms(1);
-    wyswietlacz_segment_g(1);
-    delay_ms(1);
-    wyswietlacz_liczba_jeden(0); // Masa
-    wyswietlacz_segment_a(0);
-    wyswietlacz_segment_b(0);
-    wyswietlacz_segment_c(0);
-    wyswietlacz_segment_d(0);
-    wyswietlacz_segment_e(0);
-    wyswietlacz_segment_f(0);
-    wyswietlacz_segment_g(0);
-
-    wyswietlacz_liczba_dwa(1);
-    wyswietlacz_segment_a(1);
-    delay_ms(1);
-    wyswietlacz_segment_b(1);
-    delay_ms(1);
-    wyswietlacz_segment_c(1);
-    delay_ms(1);
-    wyswietlacz_segment_d(1);
-    delay_ms(1);
-    wyswietlacz_segment_e(1);
-    delay_ms(1);
-    wyswietlacz_segment_f(1);
-    delay_ms(1);
-    wyswietlacz_segment_g(1);
-    delay_ms(1);
-    wyswietlacz_liczba_dwa(0);
-    wyswietlacz_segment_a(0);
-    wyswietlacz_segment_b(0);
-    wyswietlacz_segment_c(0);
-    wyswietlacz_segment_d(0);
-    wyswietlacz_segment_e(0);
-    wyswietlacz_segment_f(0);
-    wyswietlacz_segment_g(0);
-
-    wyswietlacz_liczba_trzy(1);
-    wyswietlacz_segment_a(1);
-    delay_ms(1);
-    wyswietlacz_segment_b(1);
-    delay_ms(1);
-    wyswietlacz_segment_c(1);
-    delay_ms(1);
-    wyswietlacz_segment_d(1);
-    delay_ms(1);
-    wyswietlacz_segment_e(1);
-    delay_ms(1);
-    wyswietlacz_segment_f(1);
-    delay_ms(1);
-    wyswietlacz_segment_g(1);
-    delay_ms(1);
-    wyswietlacz_liczba_trzy(0);
-    wyswietlacz_segment_a(0);
-    wyswietlacz_segment_b(0);
-    wyswietlacz_segment_c(0);
-    wyswietlacz_segment_d(0);
-    wyswietlacz_segment_e(0);
-    wyswietlacz_segment_f(0);
-    wyswietlacz_segment_g(0);
-
-    wyswietlacz_liczba_cztery(1);
-    wyswietlacz_segment_a(1);
-    delay_ms(1);
-    wyswietlacz_segment_b(1);
-    delay_ms(1);
-    wyswietlacz_segment_c(1);
-    delay_ms(1);
-    wyswietlacz_segment_d(1);
-    delay_ms(1);
-    wyswietlacz_segment_e(1);
-    delay_ms(1);
-    wyswietlacz_segment_f(1);
-    delay_ms(1);
-    wyswietlacz_segment_g(1);
-    delay_ms(1);
-    wyswietlacz_liczba_cztery(0);
-    wyswietlacz_segment_a(0);
-    wyswietlacz_segment_b(0);
-    wyswietlacz_segment_c(0);
-    wyswietlacz_segment_d(0);
-    wyswietlacz_segment_e(0);
-    wyswietlacz_segment_f(0);
-    wyswietlacz_segment_g(0);
 
     int liczba[4];
     // Pętla główna
     while (1)
     {
         wylacz_wszystkie_wyswietlacze();
-        // Jeśli odczytano dane, przetwórz je i wyświetl na wyświetlaczach
-        if (odczytano == 1)
-        {
-            // ftoa(odleglosc_cm, wynik_cstring, 2);
-            // intToStr((int)odleglosc_cm, wynik_cstring, 4);
-            intToStr(12, wynik_cstring, 4);
 
-            // Testowo wyrzucamy do USART. Przyda się do aplikacji
-            USART1_SendCString(wynik_cstring, 10);
-            USART1_SendByte('\n');
+        intToStr((int)odleglosc_cm, wynik_cstring, 4);
 
-            // Dalej zajmiemy się tylko czescia calkowita
-            // TODO - nie dziala wyswietlanie - do przerobienia
-            // Trzeba zrobic funkcje dla kazdego wyswietlacza
-            // np. wyswietlacz1(liczba, on/off)
+        USART1_SendCString(wynik_cstring, 10);
+        USART1_SendByte('\n');
 
-            liczba[0] = wynik_cstring[0] - 48;
-            liczba[1] = wynik_cstring[1] - 48;
-            liczba[2] = wynik_cstring[2] - 48;
-            liczba[3] = wynik_cstring[3] - 48;
+// Działa. Wymyśl proszę, aby gdy uklad zmierzy np. 12 cm NIE wyswietlalo sie 0012 tylko samo 12
+// bez swiecacych dwoch przednich wyswietlaczy. A gdy znow naa przykład zmierzy 132 to nie pokaże
+// się 0132 tylko samo 132. 
 
-            wlacz_wyswietlacz(liczba[0], 1, 1);
-            delay_ms(4);
-            wlacz_wyswietlacz(0, 1, 0);
-            wlacz_wyswietlacz(liczba[1], 2, 1);
-            delay_ms(4);
-            wlacz_wyswietlacz(0, 2, 0);
-            wlacz_wyswietlacz(liczba[2], 3, 1);
-            delay_ms(4);
-            wlacz_wyswietlacz(0, 3, 0);
-            wlacz_wyswietlacz(liczba[3], 4, 1);
-            delay_ms(4);
-            wlacz_wyswietlacz(0, 4, 0);
+// Generalnie można pierwszy wyświetlacza wyrzucić programowo, bo czujnik mierzy do 200cm
+// więc nie ma sensu. Wystarczy do 199. Czyli pierwszy wyswietlacz do wywalenia.
 
-            odczytano = 0;
-        }
+        liczba[0] = wynik_cstring[0] - 48;
+        liczba[1] = wynik_cstring[1] - 48;
+        liczba[2] = wynik_cstring[2] - 48;
+        liczba[3] = wynik_cstring[3] - 48;
+
+        wlacz_wyswietlacz(liczba[0], 1, 1);
+        delay_ms(10);
+        wlacz_wyswietlacz(0, 1, 0);
+        wlacz_wyswietlacz(liczba[1], 2, 1);
+        delay_ms(10);
+        wlacz_wyswietlacz(0, 2, 0);
+        wlacz_wyswietlacz(liczba[2], 3, 1);
+        delay_ms(10);
+        wlacz_wyswietlacz(0, 3, 0);
+        wlacz_wyswietlacz(liczba[3], 4, 1);
+        delay_ms(10);
+        wlacz_wyswietlacz(0, 4, 0);
+
+        odczytano = 0;
     }
 }
 
-// TODO
 
-// zrobić funkcje
-
-// wlacz_wyswietlacz(jaka cyfra, jaki numer_wyswietlacza, wlacz/wylacz)

@@ -11,5 +11,6 @@ void TIM1_UP_IRQHandler(void);
 void TIM2_IRQHandler();
 void couter_enable();
 void configure_GPIO_inputs(void);
+void timer3_init(void);
 
 #endif /* TIMERY */
