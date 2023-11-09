@@ -33,50 +33,106 @@ int main(void)
     couter_enable();
     char wynik_cstring[10];
 
-    wyswietlacz_liczba_jeden(0);
+    wyswietlacz_liczba_jeden(0); // Masa
     wyswietlacz_liczba_dwa(0);
     wyswietlacz_liczba_trzy(0);
     wyswietlacz_liczba_cztery(0);
 
     wyswietlacz_liczba_jeden(1);
     wyswietlacz_segment_a(1);
+    delay_ms(1);
     wyswietlacz_segment_b(1);
+    delay_ms(1);
     wyswietlacz_segment_c(1);
+    delay_ms(1);
     wyswietlacz_segment_d(1);
+    delay_ms(1);
     wyswietlacz_segment_e(1);
+    delay_ms(1);
     wyswietlacz_segment_f(1);
+    delay_ms(1);
     wyswietlacz_segment_g(1);
-    wyswietlacz_liczba_jeden(0);
+    delay_ms(1);
+    wyswietlacz_liczba_jeden(0); // Masa
+    wyswietlacz_segment_a(0);
+    wyswietlacz_segment_b(0);
+    wyswietlacz_segment_c(0);
+    wyswietlacz_segment_d(0);
+    wyswietlacz_segment_e(0);
+    wyswietlacz_segment_f(0);
+    wyswietlacz_segment_g(0);
 
     wyswietlacz_liczba_dwa(1);
     wyswietlacz_segment_a(1);
+    delay_ms(1);
     wyswietlacz_segment_b(1);
+    delay_ms(1);
     wyswietlacz_segment_c(1);
+    delay_ms(1);
     wyswietlacz_segment_d(1);
+    delay_ms(1);
     wyswietlacz_segment_e(1);
+    delay_ms(1);
     wyswietlacz_segment_f(1);
+    delay_ms(1);
     wyswietlacz_segment_g(1);
+    delay_ms(1);
     wyswietlacz_liczba_dwa(0);
+    wyswietlacz_segment_a(0);
+    wyswietlacz_segment_b(0);
+    wyswietlacz_segment_c(0);
+    wyswietlacz_segment_d(0);
+    wyswietlacz_segment_e(0);
+    wyswietlacz_segment_f(0);
+    wyswietlacz_segment_g(0);
 
     wyswietlacz_liczba_trzy(1);
     wyswietlacz_segment_a(1);
+    delay_ms(1);
     wyswietlacz_segment_b(1);
+    delay_ms(1);
     wyswietlacz_segment_c(1);
+    delay_ms(1);
     wyswietlacz_segment_d(1);
+    delay_ms(1);
     wyswietlacz_segment_e(1);
+    delay_ms(1);
     wyswietlacz_segment_f(1);
+    delay_ms(1);
     wyswietlacz_segment_g(1);
+    delay_ms(1);
     wyswietlacz_liczba_trzy(0);
+    wyswietlacz_segment_a(0);
+    wyswietlacz_segment_b(0);
+    wyswietlacz_segment_c(0);
+    wyswietlacz_segment_d(0);
+    wyswietlacz_segment_e(0);
+    wyswietlacz_segment_f(0);
+    wyswietlacz_segment_g(0);
 
     wyswietlacz_liczba_cztery(1);
     wyswietlacz_segment_a(1);
+    delay_ms(1);
     wyswietlacz_segment_b(1);
+    delay_ms(1);
     wyswietlacz_segment_c(1);
+    delay_ms(1);
     wyswietlacz_segment_d(1);
+    delay_ms(1);
     wyswietlacz_segment_e(1);
+    delay_ms(1);
     wyswietlacz_segment_f(1);
+    delay_ms(1);
     wyswietlacz_segment_g(1);
+    delay_ms(1);
     wyswietlacz_liczba_cztery(0);
+    wyswietlacz_segment_a(0);
+    wyswietlacz_segment_b(0);
+    wyswietlacz_segment_c(0);
+    wyswietlacz_segment_d(0);
+    wyswietlacz_segment_e(0);
+    wyswietlacz_segment_f(0);
+    wyswietlacz_segment_g(0);
 
     int liczba[4];
     // Pętla główna
@@ -87,7 +143,7 @@ int main(void)
         if (odczytano == 1)
         {
             // ftoa(odleglosc_cm, wynik_cstring, 2);
-            //intToStr((int)odleglosc_cm, wynik_cstring, 4);
+            // intToStr((int)odleglosc_cm, wynik_cstring, 4);
             intToStr(12, wynik_cstring, 4);
 
             // Testowo wyrzucamy do USART. Przyda się do aplikacji
@@ -95,20 +151,27 @@ int main(void)
             USART1_SendByte('\n');
 
             // Dalej zajmiemy się tylko czescia calkowita
-            // TODO - nie dziala wyswietlanie - do przerobienia 
+            // TODO - nie dziala wyswietlanie - do przerobienia
             // Trzeba zrobic funkcje dla kazdego wyswietlacza
             // np. wyswietlacz1(liczba, on/off)
-            
+
             liczba[0] = wynik_cstring[0] - 48;
             liczba[1] = wynik_cstring[1] - 48;
             liczba[2] = wynik_cstring[2] - 48;
             liczba[3] = wynik_cstring[3] - 48;
 
-
             wlacz_wyswietlacz(liczba[0], 1, 1);
+            delay_ms(4);
+            wlacz_wyswietlacz(0, 1, 0);
             wlacz_wyswietlacz(liczba[1], 2, 1);
+            delay_ms(4);
+            wlacz_wyswietlacz(0, 2, 0);
             wlacz_wyswietlacz(liczba[2], 3, 1);
+            delay_ms(4);
+            wlacz_wyswietlacz(0, 3, 0);
             wlacz_wyswietlacz(liczba[3], 4, 1);
+            delay_ms(4);
+            wlacz_wyswietlacz(0, 4, 0);
 
             odczytano = 0;
         }
