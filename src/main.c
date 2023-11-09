@@ -87,7 +87,8 @@ int main(void)
         if (odczytano == 1)
         {
             // ftoa(odleglosc_cm, wynik_cstring, 2);
-            intToStr((int)odleglosc_cm, wynik_cstring, 4);
+            //intToStr((int)odleglosc_cm, wynik_cstring, 4);
+            intToStr(12, wynik_cstring, 4);
 
             // Testowo wyrzucamy do USART. Przyda się do aplikacji
             USART1_SendCString(wynik_cstring, 10);
