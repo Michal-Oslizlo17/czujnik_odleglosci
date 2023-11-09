@@ -23,6 +23,8 @@ void timer1_init(void)
     // Ustawienie tego zegara jest takie, by wlaczyl pik na 10us i sie wylaczyl
 }
 
+// Zrobić config i handler dla timera 3.
+
 void SysTick_Handler() // SysTick
 {
     if (time)

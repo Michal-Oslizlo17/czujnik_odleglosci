@@ -24,6 +24,8 @@ int main(void)
 
     // Włącz NVIC dla przerwań timera1
     NVIC_EnableIRQ(TIM1_UP_IRQn);
+    NVIC_EnableIRQ(TIM2_UP_IRQn);
+    
     NVIC_EnableIRQ(TIM2_IRQn);
     uart_init();
 
