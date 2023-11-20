@@ -11,6 +11,8 @@ volatile uint8_t isButtonPressed;
 char buffer[BUFFER_SIZE];
 int buffer_index = 0;
 
+#define DISPLAY_PERIOD 50
+
 int main(void)
 {
     SysTick_Config(8000000 / 8000);
@@ -55,16 +57,16 @@ int main(void)
         liczba[3] = wynik_cstring[3] - 48;
 
         wlacz_wyswietlacz(liczba[0], 1, 1);
-        delay_ms(10);
+        delay_ms(DISPLAY_PERIOD);
         wlacz_wyswietlacz(0, 1, 0);
         wlacz_wyswietlacz(liczba[1], 2, 1);
-        delay_ms(10);
+        delay_ms(DISPLAY_PERIOD);
         wlacz_wyswietlacz(0, 2, 0);
         wlacz_wyswietlacz(liczba[2], 3, 1);
-        delay_ms(10);
+        delay_ms(DISPLAY_PERIOD);
         wlacz_wyswietlacz(0, 3, 0);
         wlacz_wyswietlacz(liczba[3], 4, 1);
-        delay_ms(10);
+        delay_ms(DISPLAY_PERIOD);
         wlacz_wyswietlacz(0, 4, 0);
 
         odczytano = 0;
