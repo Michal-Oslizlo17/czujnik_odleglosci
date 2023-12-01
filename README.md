@@ -38,5 +38,5 @@ Mikrokontroler kontroluje cały proces pomiaru, przetwarzania danych i prezentac
 7. Powtarzanie procesu w pętli nieskończonej.
 
 ## Autorzy
-Michał Oślizło,
-Krzysztof Krupa.
+- Krzysztof Krupa (Główny twórca projektu).
+- Michał Oślizło (Pomocnik),
