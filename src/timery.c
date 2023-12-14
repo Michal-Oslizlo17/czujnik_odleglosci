@@ -6,7 +6,7 @@ volatile uint32_t delayVar; // Flagę, która będzie ustawiona na True, jeśli 
 volatile int liczba_tickow = 0;
 volatile uint8_t odczytano = 0;
 volatile float czas_powrotu_sygnalu_us = 0;
-volatile float odleglosc_cm = 0;
+volatile int odleglosc_cm = 0;
 
 // Funkcja inicjalizacji timera3
 void timer3_init(void)

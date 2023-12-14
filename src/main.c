@@ -31,7 +31,7 @@ int main(void)
     configure_GPIO();
 
     
-    char wynik_cstring[10];
+    char wynik_cstring[4];
 
     int liczba[4];
     // Pętla główna

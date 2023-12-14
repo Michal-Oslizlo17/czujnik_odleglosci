@@ -3,7 +3,7 @@
 
 volatile extern uint8_t odczytano;
 volatile extern float czas_powrotu_sygnalu_us;
-volatile extern float odleglosc_cm;
+volatile extern int odleglosc_cm;
 
 void timer1_init(void);
 void delay_ms(int t);
