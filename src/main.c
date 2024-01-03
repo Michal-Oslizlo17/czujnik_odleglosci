@@ -30,16 +30,21 @@ int main(void)
     // Konfiguracja portów
     configure_GPIO();
 
-    
     char wynik_cstring[4];
 
     int liczba[4];
     // Pętla główna
     while (1)
     {
+
+        if (odleglosc_cm < 0 && odleglosc_cm > 200)
+            odleglosc_cm = 0;
+
+        odleglosc_smooth = odleglosc_smooth - (0.025*(odleglosc_smooth - odleglosc_cm));
+
         wylacz_wszystkie_wyswietlacze();
 
-        intToStr((int)odleglosc_cm, wynik_cstring, 4);
+        intToStr((int)odleglosc_smooth, wynik_cstring, 4);
 
         USART1_SendCString(wynik_cstring, 10);
         USART1_SendByte('\n');
@@ -79,17 +84,20 @@ int main(void)
         liczba[3] = wynik_cstring[3] - '0';
 
         // Wyświetlanie cyfr na odpowiednich segmentach
-        if (liczba[0] != -1) {
+        if (liczba[0] != -1)
+        {
             wlacz_wyswietlacz(liczba[0], 1, 1);
             delay_ms(DISPLAY_PERIOD);
             wlacz_wyswietlacz(0, 1, 0);
         }
-        if (liczba[1] != -1) {
+        if (liczba[1] != -1)
+        {
             wlacz_wyswietlacz(liczba[1], 2, 1);
             delay_ms(DISPLAY_PERIOD);
             wlacz_wyswietlacz(0, 2, 0);
         }
-        if (liczba[2] != -1) {
+        if (liczba[2] != -1)
+        {
             wlacz_wyswietlacz(liczba[2], 3, 1);
             delay_ms(DISPLAY_PERIOD);
             wlacz_wyswietlacz(0, 3, 0);
@@ -103,17 +111,17 @@ int main(void)
         - Wyodrębnianie cyfr bez zer wiodących:
         liczba[0]: Patrzymy na pierwszą cyfrę w wynik_cstring. Jeśli nie jest to zero, to przypisujemy jej wartość do liczba[0].
         Jeśli jednak pierwsza cyfra to zero, ustawiamy liczba[0] na -1, co sygnalizuje, że ta cyfra powinna zostać pominięta.
-        
+
         liczba[1]: Podobnie jak wyżej, ale dodatkowo sprawdzamy, czy druga cyfra nie jest zerem, lub czy pierwsza cyfra nie była zerem,
         lub czy obie dwie ostatnie cyfry są zerami. Jeśli którykolwiek z tych warunków jest spełniony, przypisujemy wartość drugiej cyfry do liczba[1].
         W przeciwnym razie ustawiamy liczba[1] na -1.
-        
+
         liczba[2]: Podobnie jak powyżej, ale dodatkowo sprawdzamy, czy trzecia cyfra nie jest zerem, lub czy druga cyfra nie była zerem,
         lub czy ostatnia cyfra jest zerem. Jeśli którykolwiek z tych warunków jest spełniony, przypisujemy wartość trzeciej cyfry do liczba[2].
         W przeciwnym razie ustawiamy liczba[2] na -1.
-        
+
         liczba[3]: Przypisujemy wartość ostatniej cyfry do liczba[3].
-        
+
         - Wyświetlanie cyfr:
         Dla każdej cyfry, sprawdzamy, czy jej wartość nie jest równa -1. Jeśli tak, to oznacza, że ta cyfra nie powinna być pominięta, więc włączamy odpowiedni segment na wyświetlaczu, stosujemy krótkie opóźnienie, a następnie wyłączamy segment. Procedurę tę powtarzamy dla każdej z czterech cyfr.
         Wartość -1 dla danej cyfry oznacza, że ta cyfra ma zostać pominięta, co eliminuje efekt zer wiodących.
