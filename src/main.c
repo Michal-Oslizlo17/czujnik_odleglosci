@@ -40,7 +40,7 @@ int main(void)
         if (odleglosc_cm < 0 && odleglosc_cm > 200)
             odleglosc_cm = 0;
 
-        odleglosc_smooth = odleglosc_smooth - (0.025*(odleglosc_smooth - odleglosc_cm));
+        odleglosc_smooth = odleglosc_smooth - (0.05*(odleglosc_smooth - odleglosc_cm));
 
         wylacz_wszystkie_wyswietlacze();
 
